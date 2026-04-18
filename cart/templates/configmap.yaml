@@ -6,6 +6,6 @@ metadata:
   labels:
     {{- include "cart.labels" . | nindent 4 }}
 data:
-  REDIS_HOST: {{ .Values.ConfigMap.REDIS_HOST }}
-  CATALOGUE_HOST: {{ .Values.ConfigMap.CATALOGUE_HOST }}
-  CATALOGUE_PORT: {{ .Values.ConfigMap.CATALOGUE_PORT }}
+  REDIS_HOST: {{ .Values.configMap.REDIS_HOST }}
+  CATALOGUE_HOST: {{ .Values.configMap.CATALOGUE_HOST }}
+  CATALOGUE_PORT: {{ .Values.configMap.CATALOGUE_PORT }}
