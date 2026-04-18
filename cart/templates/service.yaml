@@ -4,10 +4,10 @@ metadata:
   name: {{- include "cart.name" }}
   namespace: {{ .Values.namespace }}
   labels: 
-    {{- include "cart.labels" . | nindent4 }}
+    {{- include "cart.labels" . | nindent 4 }}
 spec:
   selector:
-    {{- include "cart.labels" . | nindent4 }}
+    {{- include "cart.labels" . | nindent 4 }}
   ports:
   - protocol: TCP
     port: 8080

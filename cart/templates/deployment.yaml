@@ -4,17 +4,17 @@ metadata:
   name: {{- include "cart.name" . }}
   namespace: {{ .Values.namespace }}
   labels: 
-    {{- include "cart.labels" . | nindent4 }}
+    {{- include "cart.labels" . | nindent 4 }}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      {{- include "cart.labels" . | nindent6 }}
+      {{- include "cart.labels" . | nindent 6 }}
   template:
     metadata:
       name: {{- include "cart.name" . }}
       labels: 
-        {{- include "cart.labels" . | nindent6 }}
+        {{- include "cart.labels" . | nindent 6 }}
     spec:
       containers:
       - name: {{- include "cart.name" . }}
