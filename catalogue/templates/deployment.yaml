@@ -4,24 +4,24 @@ metadata:
   name: {{ include "catalogue.name" . }}
   namespace: {{ .Values.namespace }}
   labels:
-    {{- include "catalogue.labels" . | nindent 4 }}
+    {{-include "catalogue.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.deployment.replicas }}
   selector:
     matchLabels:
-      {{- include "catalogue.labels" . | nindent 6 }}
+      {{-include "catalogue.labels" . | nindent 6 }}
   template:
     metadata:
       name: catalogue
       labels:
-        {{- include "catalogue.labels" . | nindent 8 }}
+        {{-include "catalogue.labels" . | nindent 8 }}
     spec:
       containers:
       - name: {{ .Values.deployment.containerName }}
         image: "{{ .Values.deployment.imageName }}:{{ .Values.deployment.imageVersion }}"
         imagePullPolicy: Always # safe to pull everytime, there may be images with same version rebuilt and pushed
         resources:
-            {{- toYaml .Values.resources | nindent 10 }}
+            {{-toYaml .Values.resources | nindent 10 }}
         readinessProbe:
           # httpGet:
           #   path: /health
