@@ -12,12 +12,12 @@ spec:
       {{- include "cart.labels" . | nindent 6 }}
   template:
     metadata:
-      name: {{- include "cart.name" . }}
+      name: {{ include "cart.name" . }}
       labels: 
         {{- include "cart.labels" . | nindent 6 }}
     spec:
       containers:
-      - name: {{- include "cart.name" . }}
+      - name: {{ include "cart.name" . }}
         image: "{{ .Values.deployment.imageName }}:{{ .Values.deployment.imageVersion }}"
         imagePullPolicy: Always # safe to pull everytime, there may be images with same version rebuilt and pushed
         resources:
@@ -39,4 +39,4 @@ spec:
           periodSeconds: 10 
         envFrom:
         - configMapRef:
-            name: {{- include "cart.name" . }}
+            name: {{ include "cart.name" . }}
