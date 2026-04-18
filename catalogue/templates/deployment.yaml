@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "catalogue.name" . }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    {{- include "catalogue.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.deployment.replicas }}
+  selector:
+    matchLabels:
+      {{- include "catalogue.labels" . | nindent 6 }}
+  template:
+    metadata:
+      name: catalogue
+      labels:
+        {{- include "catalogue.labels" . | nindent 8 }}
+    spec:
+      containers:
+      - name: {{ .Values.deployment.containerName }}
+        image: {{ .Values.deployment.imageName }}: {{ .Values.deployment.imageVersion }}
+        imagePullPolicy: Always # safe to pull everytime, there may be images with same version rebuilt and pushed
+        resources:
+            {{- toYaml .Values.resources | nindent 10 }}
+        readinessProbe:
+          # httpGet:
+          #   path: /health
+          #   port: 8080
+          tcpSocket:
+              port: 8080
+          failureThreshold: 2
+          periodSeconds: 10
+          initialDelaySeconds: 15
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          failureThreshold: 2
+          periodSeconds: 10 
+        envFrom:
+        - configMapRef:
+            name: {{ include "catalogue.name" . }}

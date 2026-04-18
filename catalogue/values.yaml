@@ -1,0 +1,21 @@
+namespace: roboshop
+labels:
+  project: roboshop
+  tier: backend
+  component: catalogue
+deployment:
+  imageName: jaswanth96/catalogue
+  imageVersion: 1.0.0
+  replicas: 1
+  containerName: catalogue
+resources:
+  requests:
+    cpu: "100m"
+    memory: "128Mi"
+  limits:
+    cpu: "100m"
+    memory: "128Mi"  
+
+configMap:
+  MONGO_URL: mongodb://mongodb:27017/catalogue
+
