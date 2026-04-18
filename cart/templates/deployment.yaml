@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{- include "cart.name" . }}
+  namespace: {{ .Values.namespace }}
+  labels: 
+    {{- include "cart.labels" . | nindent4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "cart.labels" . | nindent6 }}
+  template:
+    metadata:
+      name: {{- include "cart.name" . }}
+      labels: 
+        {{- include "cart.labels" . | nindent6 }}
+    spec:
+      containers:
+      - name: {{- include "cart.name" . }}
+        image: "{{ .Values.deployment.imageName }}:{{ .Values.deployment.imageVersion }}"
+        imagePullPolicy: Always # safe to pull everytime, there may be images with same version rebuilt and pushed
+        resources:
+          {{- toYaml .Values.resources | nindent 10 }}
+        readinessProbe:
+          # httpGet:
+          #   path: /health
+          #   port: 8080
+          tcpSocket:
+              port: 8080
+          failureThreshold: 2
+          periodSeconds: 10
+          initialDelaySeconds: 15
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          failureThreshold: 2
+          periodSeconds: 10 
+        envFrom:
+        - configMapRef:
+            name: {{- include "cart.name" . }}
