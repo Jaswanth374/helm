@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: {{ .Values.deployment.containerName }}
-        image: "{{ .Values.deployment.imageName }}: {{ .Values.deployment.imageVersion }}"
+        image: "{{ .Values.deployment.imageName }}:{{ .Values.deployment.imageVersion }}"
         imagePullPolicy: Always # safe to pull everytime, there may be images with same version rebuilt and pushed
         resources:
             {{- toYaml .Values.resources | nindent 10 }}
